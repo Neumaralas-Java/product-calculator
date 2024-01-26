@@ -1,0 +1,39 @@
+# Spring Boot
+/target/
+*.iml
+*.iws
+*.ipr
+*.log
+
+# Maven
+log/
+target/
+*.iml
+*.iws
+*.ipr
+
+# Gradle
+.gradle/
+/build/
+
+# IntelliJ IDEA
+**/node_modules
+**/out
+**/target
+**/.idea
+**/dist
+**/.vscode
+**/*.iml
+*.iml
+*.iws
+*.ipr
+
+# Eclipse
+.classpath
+.project
+.settings/
+
+# Operating System Files
+.DS_Store
+Thumbs.db
+
