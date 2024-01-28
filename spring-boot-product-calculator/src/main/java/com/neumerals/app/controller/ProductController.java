@@ -1,9 +1,10 @@
 package com.neumerals.app.controller;
 
+import com.neumerals.app.dto.CalculateProductPriceDTO;
 import com.neumerals.app.dto.ProductPricesDTO;
 import com.neumerals.app.entity.Product;
-import com.neumerals.app.entity.Quantity;
 import com.neumerals.app.dto.ProductDTO;
+import com.neumerals.app.entity.QuantityType;
 import com.neumerals.app.service.ProductService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin
@@ -44,10 +46,27 @@ public class ProductController {
         return productDTO;
     }
 
-    @GetMapping("/priceEngine")
-    public List<Double> calculateProductPrice(@RequestParam String productName, @RequestParam Quantity quantity)
-            throws Exception {
-        return productService.calculateProductPrice(productName, quantity);
+    @PostMapping("/priceEngine")
+    public ResponseEntity<?> calculatePriceByProductId(@RequestBody CalculateProductPriceDTO calculateDTO) throws Exception {
+
+        try {
+            Product product = productService.getProductByProductId(calculateDTO.getProductId());
+
+            ProductPricesDTO totalPrice= calculateDTO.getTotalPrice();
+
+            if (calculateDTO.getQuantityType() == QuantityType.CARTONS ){
+                totalPrice = calculatePrice(product, calculateDTO.getQuantity()*(product.getQuantity()));
+            } else if (calculateDTO.getQuantityType() == QuantityType.UNITS) {
+                totalPrice = calculatePrice(product, calculateDTO.getQuantity());
+            }
+
+            return ResponseEntity.status(HttpStatus.OK).body(totalPrice);
+        }catch (NoSuchElementException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+
     }
 
     @GetMapping("/item/{productId}")

@@ -1,6 +1,6 @@
 package com.neumerals.app.entity;
 
-public enum Quantity {
+public enum QuantityType {
     CARTONS,
-    SINGLE_UNIT
+    UNITS
 }

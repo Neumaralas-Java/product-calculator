@@ -23,10 +23,6 @@ public class Product implements SuperEntity {
     @Column(name = "product_name",length = 50,nullable = false)
     private String productName;
 
-//    @Column(name = "quantity",length = 10,nullable = false)
-//    @Enumerated(EnumType.STRING)
-//    private Quantity quantity;
-
     @Column(name = "quantity", nullable = false)
     private int quantity;
 
@@ -35,4 +31,5 @@ public class Product implements SuperEntity {
 
     @Column(name = "discount_percentage",length = 10)
     private double discount;
+
 }

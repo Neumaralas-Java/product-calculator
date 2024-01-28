@@ -1,14 +1,13 @@
 package com.neumerals.app.service.impl;
 
+import com.neumerals.app.dto.CalculateProductPriceDTO;
 import com.neumerals.app.dto.ProductDTO;
 import com.neumerals.app.entity.Product;
-import com.neumerals.app.entity.Quantity;
 import com.neumerals.app.repository.ProductRepository;
 import com.neumerals.app.service.ProductService;
 import com.neumerals.app.service.exception.BOException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-import java.util.List;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -51,8 +50,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Double> calculateProductPrice(String productName, Quantity quantity) {
-        return null;
+    public CalculateProductPriceDTO calculatePriceByProductId(CalculateProductPriceDTO calculateDTO) {
+        Product product=productRepository.findById(calculateDTO.getProductId()).orElseThrow(()->new BOException("No product found for that "+calculateDTO.getProductId()));
+        CalculateProductPriceDTO calculatorDTO = modelMapper.map(product, CalculateProductPriceDTO.class);
+
+        return calculatorDTO;
+
     }
 
     @Override
