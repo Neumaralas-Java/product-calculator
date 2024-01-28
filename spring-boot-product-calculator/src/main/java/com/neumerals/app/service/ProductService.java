@@ -1,6 +1,7 @@
 package com.neumerals.app.service;
 
 import com.neumerals.app.dto.ProductDTO;
+import com.neumerals.app.entity.Product;
 import com.neumerals.app.entity.Quantity;
 
 import java.util.List;
@@ -10,4 +11,6 @@ public interface ProductService {
     ProductDTO updateProduct(ProductDTO product);
     List<Double> calculateProductPrice(String productName, Quantity quantity);
     ProductDTO getProductPriceByProductId(int productId);
+
+    Product getProductByProductId(Integer productId);
 }

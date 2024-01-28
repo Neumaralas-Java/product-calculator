@@ -61,4 +61,9 @@ public class ProductServiceImpl implements ProductService {
         ProductDTO productDTO =modelMapper.map(product, ProductDTO.class);
         return productDTO;
     }
+
+    @Override
+    public Product getProductByProductId(Integer productId) {
+        return productRepository.findById(productId).orElseThrow(()->new BOException("No product found for that"+productId));
+    }
 }
